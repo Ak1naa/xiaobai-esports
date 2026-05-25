@@ -71,10 +71,62 @@
           <p class="section-kicker">ORDER</p>
           <h2>下单方式</h2>
           <p class="big-text">微信搜索“小摆电竞服务号”</p>
-          <a class="service-qr-link" href="#service">
-            <span>查看值班客服二维码</span>
-            <small>点击后可查看值班客服二维码并扫码下单</small>
-          </a>
+          <p class="order-hint">扫码添加值班客服下单</p>
+
+          <div class="order-staff-block">
+            <p class="order-staff-title">当前值班客服</p>
+            <article class="current-staff-card" id="current-staff">
+              <div class="staff-profile">
+                <img class="staff-avatar" src="./qiaoqiao-avatar.png.png" alt="巧巧头像" />
+                <div>
+                  <h3>巧巧</h3>
+                  <p>值班时间：08:00 - 14:00</p>
+                </div>
+              </div>
+              <div class="qr-box has-qr">
+                <img src="./qiaoqiao.png.png" alt="巧巧客服二维码" />
+              </div>
+            </article>
+
+            <button class="staff-toggle" type="button" id="staff-toggle" aria-expanded="false">
+              查看全部客服 →
+            </button>
+
+            <div class="service-grid all-staff-grid" id="all-staff" hidden>
+              <article class="staff-card">
+                <img class="staff-avatar" src="./qiaoqiao-avatar.png.png" alt="巧巧头像" />
+                <h3>巧巧</h3>
+                <p>08:00 - 14:00</p>
+                <div class="qr-box has-qr">
+                  <img src="./qiaoqiao.png.png" alt="巧巧客服二维码" />
+                </div>
+              </article>
+              <article class="staff-card">
+                <img class="staff-avatar" src="./nini-avatar.png.png" alt="妮妮头像" />
+                <h3>妮妮</h3>
+                <p>14:00 - 20:00</p>
+                <div class="qr-box has-qr">
+                  <img src="./nini.png.png" alt="妮妮客服二维码" />
+                </div>
+              </article>
+              <article class="staff-card">
+                <img class="staff-avatar" src="./toutou-avatar.png" alt="头头头像" />
+                <h3>头头</h3>
+                <p>20:00 - 02:00</p>
+                <div class="qr-box has-qr">
+                  <img src="./toutou.png.png" alt="头头客服二维码" />
+                </div>
+              </article>
+              <article class="staff-card">
+                <img class="staff-avatar" src="./azi-avatar.png.png" alt="阿紫头像" />
+                <h3>阿紫</h3>
+                <p>02:00 - 08:00</p>
+                <div class="qr-box has-qr">
+                  <img src="./azi.png.png" alt="阿紫客服二维码" />
+                </div>
+              </article>
+            </div>
+          </div>
         </article>
 
         <article class="panel yy-panel" id="yy">
@@ -289,51 +341,85 @@
         </div>
       </section>
 
-      <section class="section-wrap service" id="service">
-        <div class="section-head">
-          <div>
-            <p class="section-kicker">SERVICE</p>
-            <h2>客服值班</h2>
-          </div>
-          <p>四位客服轮值接待。</p>
-        </div>
-        <div class="service-grid">
-          <article class="staff-card">
-            <h3>巧巧</h3>
-            <p>08:00 - 14:00</p>
-            <div class="qr-box has-qr">
-              <img src="./qiaoqiao.png.png" alt="巧巧客服二维码" />
-            </div>
-          </article>
-          <article class="staff-card">
-            <h3>妮妮</h3>
-            <p>14:00 - 20:00</p>
-            <div class="qr-box has-qr">
-              <img src="./nini.png.png" alt="妮妮客服二维码" />
-            </div>
-          </article>
-          <article class="staff-card">
-            <h3>头头</h3>
-            <p>20:00 - 02:00</p>
-            <div class="qr-box has-qr">
-              <img src="./toutou.png.png" alt="头头客服二维码" />
-            </div>
-          </article>
-          <article class="staff-card">
-            <h3>阿紫</h3>
-            <p>02:00 - 08:00</p>
-            <div class="qr-box has-qr">
-              <img src="./azi.png.png" alt="阿紫客服二维码" />
-            </div>
-          </article>
-        </div>
-      </section>
-
     </main>
 
     <footer class="footer">
       <span>小摆电竞</span>
       <span>专业团队 用心服务 感谢您的支持与信任</span>
     </footer>
+    <script>
+      const staffList = [
+        {
+          name: "巧巧",
+          time: "08:00 - 14:00",
+          start: 8,
+          end: 14,
+          avatar: "./qiaoqiao-avatar.png.png",
+          qr: "./qiaoqiao.png.png"
+        },
+        {
+          name: "妮妮",
+          time: "14:00 - 20:00",
+          start: 14,
+          end: 20,
+          avatar: "./nini-avatar.png.png",
+          qr: "./nini.png.png"
+        },
+        {
+          name: "头头",
+          time: "20:00 - 02:00",
+          start: 20,
+          end: 2,
+          avatar: "./toutou-avatar.png",
+          qr: "./toutou.png.png"
+        },
+        {
+          name: "阿紫",
+          time: "02:00 - 08:00",
+          start: 2,
+          end: 8,
+          avatar: "./azi-avatar.png.png",
+          qr: "./azi.png.png"
+        }
+      ];
+
+      const isOnDuty = (staff, hour) =>
+        staff.start < staff.end
+          ? hour >= staff.start && hour < staff.end
+          : hour >= staff.start || hour < staff.end;
+
+      const renderCurrentStaff = () => {
+        const currentHour = new Date().getHours();
+        const staff = staffList.find((item) => isOnDuty(item, currentHour)) || staffList[0];
+        const card = document.querySelector("#current-staff");
+        if (!card) return;
+
+        card.innerHTML = `
+          <div class="staff-profile">
+            <img class="staff-avatar" src="${staff.avatar}" alt="${staff.name}头像" />
+              <div>
+                <h3>${staff.name}</h3>
+              <p>值班时间：${staff.time}</p>
+            </div>
+          </div>
+          <div class="qr-box has-qr">
+            <img src="${staff.qr}" alt="${staff.name}客服二维码" />
+          </div>
+        `;
+      };
+
+      renderCurrentStaff();
+
+      const toggle = document.querySelector("#staff-toggle");
+      const allStaff = document.querySelector("#all-staff");
+      if (toggle && allStaff) {
+        toggle.addEventListener("click", () => {
+          const expanded = toggle.getAttribute("aria-expanded") === "true";
+          toggle.setAttribute("aria-expanded", String(!expanded));
+          allStaff.hidden = expanded;
+          toggle.textContent = expanded ? "查看全部客服 →" : "收起全部客服 ↑";
+        });
+      }
+    </script>
   </body>
 </html>
